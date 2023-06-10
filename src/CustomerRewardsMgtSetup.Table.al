@@ -19,4 +19,12 @@ table 50102 "Customer Rewards Mgt. Setup"
             Clustered = true;
         }
     }
+
+    internal procedure SetDefault();
+    begin
+        if not Get() then begin
+            "Cust. Rew. Ext. Mgt. Code. ID" := Codeunit::"Customer Rewards Ext. Mgt.";
+            Insert();
+        end
+    end;
 }
