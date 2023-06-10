@@ -1,6 +1,5 @@
 page 50100 "Customer Rewards Wizard"
 {
-    // Specifies that this page will be a navigate page.
     PageType = NavigatePage;
     Caption = 'Customer Rewards assisted setup guide';
     ContextSensitiveHelpPage = 'sales-rewards';

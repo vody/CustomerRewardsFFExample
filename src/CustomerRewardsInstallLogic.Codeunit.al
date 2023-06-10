@@ -1,6 +1,5 @@
 codeunit 50100 "Customer Rewards Install Logic"
 {
-    // Customer Rewards Install Logic
     Subtype = Install;
 
     trigger OnInstallAppPerCompany();
