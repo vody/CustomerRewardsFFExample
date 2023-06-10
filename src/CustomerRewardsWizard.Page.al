@@ -4,6 +4,7 @@ page 50100 "Customer Rewards Wizard"
     PageType = NavigatePage;
     Caption = 'Customer Rewards assisted setup guide';
     ContextSensitiveHelpPage = 'sales-rewards';
+    ApplicationArea = All;
 
     layout
     {
@@ -17,7 +18,6 @@ page 50100 "Customer Rewards Wizard"
 
                 field("MediaResourcesStandard.""Media Reference"""; MediaResourcesStandard."Media Reference")
                 {
-                    ApplicationArea = All;
                     Editable = false;
                     ShowCaption = false;
                 }
@@ -41,7 +41,6 @@ page 50100 "Customer Rewards Wizard"
 
                         field(Spacer1; '')
                         {
-                            ApplicationArea = All;
                             ShowCaption = false;
                             Editable = false;
                             MultiLine = true;
@@ -67,7 +66,6 @@ page 50100 "Customer Rewards Wizard"
 
                         field(EnableFeature; EnableCustomerRewards)
                         {
-                            ApplicationArea = All;
                             MultiLine = true;
                             Editable = true;
                             Caption = 'I understand and accept these terms.';
@@ -93,7 +91,6 @@ page 50100 "Customer Rewards Wizard"
 
                     field(Spacer2; '')
                     {
-                        ApplicationArea = All;
                         ShowCaption = false;
                         Editable = false;
                         MultiLine = true;
@@ -107,7 +104,6 @@ page 50100 "Customer Rewards Wizard"
 
                         field(Activationcode; ActivationCode)
                         {
-                            ApplicationArea = All;
                             ShowCaption = false;
                             Editable = true;
                         }
@@ -142,7 +138,6 @@ page 50100 "Customer Rewards Wizard"
         {
             action(ActionBack)
             {
-                ApplicationArea = All;
                 Caption = 'Back';
                 Enabled = BackEnabled;
                 Visible = BackEnabled;
@@ -157,7 +152,6 @@ page 50100 "Customer Rewards Wizard"
 
             action(ActionNext)
             {
-                ApplicationArea = All;
                 Caption = 'Next';
                 Enabled = NextEnabled;
                 Visible = NextEnabled;
@@ -172,7 +166,6 @@ page 50100 "Customer Rewards Wizard"
 
             action(ActionActivate)
             {
-                ApplicationArea = All;
                 Caption = 'Activate';
                 Enabled = ActivateEnabled;
                 Visible = ActivateEnabled;
@@ -198,7 +191,6 @@ page 50100 "Customer Rewards Wizard"
 
             action(ActionFinish)
             {
-                ApplicationArea = All;
                 Caption = 'Finish';
                 Enabled = FinalPageVisible;
                 Image = Approve;
