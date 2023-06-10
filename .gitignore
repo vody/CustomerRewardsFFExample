@@ -1,0 +1,10 @@
+## AL Repository
+*.app
+**/*.g.xlf
+**/rad.json
+**/settings.json
+.snapshots/
+**/.snapshots/*
+**/.alcache/*
+**/.altemplates/*
+*.rapidstart
