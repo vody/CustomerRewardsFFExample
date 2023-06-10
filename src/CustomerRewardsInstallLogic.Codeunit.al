@@ -1,15 +1,14 @@
 codeunit 50100 "Customer Rewards Install Logic"
 {
-    // Customer Rewards Install Logic
     Subtype = Install;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Role Center Notification Mgt.", OnBeforeShowNotifications, '', false, false)]
     procedure OnBeforeShowNotifications();
     var
         CustomerRewardsExtMgtSetup: Record "Customer Rewards Mgt. Setup";
-        FeatureMgt: Codeunit "FeatureMgt_FF_TSL";  // OpenFeature Management codeunit
+        FeatureMgt: Codeunit "FeatureMgt_FF_TSL";
     begin
-        if FeatureMgt.IsEnabled('CustomerRewards') then // Check if the feature is enabled
+        if FeatureMgt.IsEnabled('CustomerRewards') then
             CustomerRewardsExtMgtSetup.SetDefault();
     end;
 

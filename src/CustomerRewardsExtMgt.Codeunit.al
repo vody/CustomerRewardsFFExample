@@ -4,7 +4,6 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         DummySuccessResponseTxt: Label '{"ActivationResponse": "Success"}', Locked = true;
         NoRewardlevelTxt: Label 'NONE';
 
-    // Determines if the extension is activated
     procedure IsCustomerRewardsActivated(): Boolean;
     var
         ActivationCodeInfo: Record "Activation Code Information";
@@ -17,7 +16,6 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         exit(false);
     end;
 
-    // Opens the Customer Rewards Assisted Setup Guide
     procedure OpenCustomerRewardsWizard();
     var
         CustomerRewardsWizard: Page "Customer Rewards Wizard";
@@ -25,7 +23,6 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         CustomerRewardsWizard.RunModal;
     end;
 
-    // Opens the Reward Level page
     procedure OpenRewardsLevelPage();
     var
         RewardsLevelPage: Page "Rewards Level List";
@@ -33,7 +30,6 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         RewardsLevelPage.Run;
     end;
 
-    // Determines the correponding reward level and returns it
     procedure GetRewardLevel(RewardPoints: Integer) RewardLevelTxt: Text;
     var
         RewardLevelRec: Record "Reward Level";
@@ -44,7 +40,7 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         if RewardLevelRec.IsEmpty then
             exit;
         RewardLevelRec.SetRange("Minimum Reward Points", 0, RewardPoints);
-        RewardLevelRec.SetCurrentKey("Minimum Reward Points"); // sorted in ascending order
+        RewardLevelRec.SetCurrentKey("Minimum Reward Points");
 
         if not RewardLevelRec.FindFirst then
             exit;
@@ -53,29 +49,25 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         if RewardPoints >= MinRewardLevelPoints then begin
             RewardLevelRec.Reset;
             RewardLevelRec.SetRange("Minimum Reward Points", MinRewardLevelPoints, RewardPoints);
-            RewardLevelRec.SetCurrentKey("Minimum Reward Points"); // sorted in ascending order
+            RewardLevelRec.SetCurrentKey("Minimum Reward Points");
             RewardLevelRec.FindLast;
             RewardLevelTxt := RewardLevelRec.Level;
         end;
     end;
 
-    // Activates Customer Rewards if activation code is validated successfully
     procedure ActivateCustomerRewards(ActivationCode: Text): Boolean;
     var
         ActivationCodeInfo: Record "Activation Code Information";
     begin
-        // raise event
         OnGetActivationCodeStatusFromServer(ActivationCode);
         exit(ActivationCodeInfo.Get(ActivationCode));
     end;
 
-    // publishes event
     [IntegrationEvent(false, false)]
     procedure OnGetActivationCodeStatusFromServer(ActivationCode: Text);
     begin
     end;
 
-    // Subscribes to OnGetActivationCodeStatusFromServer event and handles it when the event is raised
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Customer Rewards Ext. Mgt.", 'OnGetActivationCodeStatusFromServer', '', false, false)]
     local procedure OnGetActivationCodeStatusFromServerSubscriber(ActivationCode: Text);
     var
@@ -85,9 +77,8 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         JsonRepsonse: JsonToken;
     begin
         if not CanHandle then
-            exit; // use the mock
+            exit;
 
-        // Get response from external service and update activation code information if successful
         if (GetHttpResponse(ActivationCode, ResponseText)) then begin
             JsonRepsonse.ReadFrom(ResponseText);
 
@@ -109,11 +100,8 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         end;
     end;
 
-    // Helper method to make calls to a service to validate activation code
     local procedure GetHttpResponse(ActivationCode: Text; var ResponseText: Text): Boolean;
     begin
-        // You will typically make external calls / http requests to your service to validate the activation code
-        // here but for the sample extension we simply return a successful dummy response
         if ActivationCode = '' then
             exit(false);
 
@@ -121,25 +109,23 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
         exit(true);
     end;
 
-    // Subcribes to the OnAfterReleaseSalesDoc event and increases reward points for the sell to customer in posted sales order
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]
     local procedure OnAfterReleaseSalesDocSubscriber(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean; LinesWereModified: Boolean);
     var
         Customer: Record Customer;
-        FeatureMgt: Codeunit "FeatureMgt_FF_TSL";  // OpenFeature Management codeunit
+        FeatureMgt: Codeunit "FeatureMgt_FF_TSL";
     begin
-        if not FeatureMgt.IsEnabled('CustomerRewards') then // Check if the feature is enabled
+        if not FeatureMgt.IsEnabled('CustomerRewards') then
             exit;
 
         if SalesHeader.Status <> SalesHeader.Status::Released then
             exit;
 
         Customer.Get(SalesHeader."Sell-to Customer No.");
-        Customer.RewardPoints += 1; // Add a point for each new sales order
+        Customer.RewardPoints += 1;
         Customer.Modify;
     end;
 
-    // Checks if the current codeunit is allowed to handle Customer Rewards Activation requests rather than a mock.
     local procedure CanHandle(): Boolean;
     var
         CustomerRewardsExtMgtSetup: Record "Customer Rewards Mgt. Setup";
