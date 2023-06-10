@@ -126,7 +126,11 @@ codeunit 50101 "Customer Rewards Ext. Mgt."
     local procedure OnAfterReleaseSalesDocSubscriber(VAR SalesHeader: Record "Sales Header"; PreviewMode: Boolean; LinesWereModified: Boolean);
     var
         Customer: Record Customer;
+        FeatureMgt: Codeunit "FeatureMgt_FF_TSL";  // OpenFeature Management codeunit
     begin
+        if not FeatureMgt.IsEnabled('CustomerRewards') then // Check if the feature is enabled
+            exit;
+
         if SalesHeader.Status <> SalesHeader.Status::Released then
             exit;
 
