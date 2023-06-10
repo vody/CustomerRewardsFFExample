@@ -4,7 +4,7 @@ page 50100 "Customer Rewards Wizard"
     PageType = NavigatePage;
     Caption = 'Customer Rewards assisted setup guide';
     ContextSensitiveHelpPage = 'sales-rewards';
-    ApplicationArea = All;
+    ApplicationArea = CustomerRewards; // Set ApplicationArea to your feature identifier
 
     layout
     {

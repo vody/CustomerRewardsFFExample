@@ -10,7 +10,14 @@
   "help": "https://go.microsoft.com/fwlink/?linkid=2103698",
   "url": "https://go.microsoft.com/fwlink/?linkid=724011",
   "logo": "",
-  "dependencies": [],
+  "dependencies": [
+    {
+      "id": "c42f2379-d7b5-4378-8ce4-9bca293c6189",
+      "publisher": "Theta Systems Limited",
+      "name": "OpenFeature",
+      "version": "3.0.0.0"
+    }
+  ],
   "screenshots": [],
   "platform": "22.0.0.0",
   "application": "22.0.0.0",
