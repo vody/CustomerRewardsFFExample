@@ -7,7 +7,6 @@ pageextension 50101 "Customer List Ext." extends "Customer List"
             action("Reward Levels")
             {
                 ApplicationArea = CustomerRewards;
-                ;
                 Image = CustomerRating;
                 Promoted = true;
                 PromotedCategory = Process;
